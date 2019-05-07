@@ -26,8 +26,8 @@ namespace UACBypass_SilentCleanup
 
             if (args.Length > 0)
             {
-                payload = args[0];
-                Console.WriteLine(@"[+] Payload to be Executed " + payload);
+                payload = args[0];             
+        Console.WriteLine(@"[+] Payload to be Executed " + payload);
             }
             else
             {
